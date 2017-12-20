@@ -1,0 +1,51 @@
+ // Apply the java plugin to add support for Java
+apply plugin: 'java'
+
+buildscript {
+	repositories {
+	    jcenter()
+	}
+
+  	dependencies {
+    	classpath 'com.apollographql.apollo:apollo-gradle-plugin:0.4.3'
+  	}
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	compile 'com.apollographql.apollo:apollo-runtime:0.4.3'
+}
+
+// Apply the eclipse plugin to add support for Eclipse
+apply plugin: 'eclipse'
+
+eclipse {	 
+  classpath {
+	downloadSources = true
+	downloadJavadoc = true
+  }
+} 
+
+def eclipseSourceFolders=[
+	'src/main/java',
+	'src/main/resources',
+	'src/test/java',
+	'src/test/resources',
+	'src/main/graphql',
+	'build/generated/source/apollo/'
+];
+
+tasks.eclipse.dependsOn << {
+		
+	for (String sourceFolder: eclipseSourceFolders){ 
+		def resourceDir = new File(project.projectDir, sourceFolder)
+		if( !resourceDir.exists() && ! resourceDir.mkdirs() ) {
+    		logger.info("Not able to create %1",resourceDir);
+    	}
+	}
+}
+
+apply plugin: 'com.apollographql.android'

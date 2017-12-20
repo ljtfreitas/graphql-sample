@@ -1,0 +1,22 @@
+query BlogPostsQuery {
+	recentPosts(count: 10) {
+    	id
+    	text
+    	category
+    	author {
+      		name
+    	}
+  	}
+}
+
+query BlogPostByName($name: String!) {
+	findPostByName(name: $name) {
+    	id
+    	text
+    	category
+    	author {
+      		name
+    	}
+ 	}
+}
+
