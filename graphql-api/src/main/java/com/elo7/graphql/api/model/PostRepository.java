@@ -30,4 +30,10 @@ public class PostRepository {
 		return posts.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
 	}
 
+	public Post newPost(String title, String text, String category, String author) {
+		Post newPost = new Post(title, text, category, new Author(author));
+		posts.add(newPost);
+		return newPost;
+	}
+
 }
